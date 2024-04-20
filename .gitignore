@@ -160,5 +160,4 @@ cython_debug/
 #.idea/
 
 anotation.yml
-migrations
 Dockerfiles
