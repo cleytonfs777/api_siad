@@ -99,7 +99,7 @@ async def register_reset_request(user: Userreset, db_session: Session = Depends(
                 IS_BUSY = False
         else:
             # Cria e salva no banco apenas se o WebSocket não estiver disponível ou estiver ocupado
-            new_request = ReseterNeed(username=user.username)
+            new_request = ReseterNeed(username=user.username, email=user.email)
             db_session.add(new_request)
             db_session.commit()
             return {"message": "Pedido de reset registrado com sucesso. Aguarde alguns minutos para usar a nova senha"}

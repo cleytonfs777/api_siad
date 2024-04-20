@@ -15,6 +15,7 @@ class ReseterNeed(Base):
     __tablename__ = 'reseter_need'
     id = Column('id', Integer, primary_key=True, nullable=False, autoincrement=True)
     username = Column('username', String, nullable=False, unique=True)
+    email = Column('email', String, nullable=False, unique=True)
 
 
 class Codes(Base):

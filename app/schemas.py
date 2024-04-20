@@ -16,6 +16,7 @@ class UserLogin(BaseModel):
 
 class Userreset(BaseModel):
     username: str
+    email: str
 
 
 class ForgotPassword(BaseModel):
