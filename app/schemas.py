@@ -24,4 +24,10 @@ class ForgotPassword(BaseModel):
     email: str
 
 class ResetRequest(BaseModel):
+    email: str
     username: str
+
+class MessageUser(BaseModel):
+    token: str
+    email: str
+    message: str

@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from app.WebSocketConnect import ConnectionManager
 from app.routes import user_router, reset_router, admin_router
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,6 +25,21 @@ app.add_middleware(
 def health_check():
     return "Ok, it's alive!"
 
+
+
 app.include_router(user_router)
 app.include_router(reset_router)
 app.include_router(admin_router)
+
+manager = ConnectionManager()
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            # A lógica para manusear a mensagem recebida
+            await manager.send_data(f"Eco: {data}")
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
