@@ -92,7 +92,7 @@ async def register_reset_request(user: Userreset, db_session: Session = Depends(
         IS_BUSY = True
         try:
             await websocket.send_json({"username": user.username, "email": user.email})
-            return JSONResponse(content={"message": "Pedido de reset enviado e confirmado com sucesso."}, status_code=200)
+            return JSONResponse(content={"message": "Pedido de reset enviado e confirmado com sucesso. Enviaremos um email de confirmação"}, status_code=200)
         except Exception as e:
             print(f"Erro durante o envio/recepção: {e}")
     else:
