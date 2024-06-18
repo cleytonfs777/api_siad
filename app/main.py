@@ -1,6 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from app.WebSocketConnect import ConnectionManager
-from app.routes import user_router, reset_router, admin_router
+from app.routes import user_router, reset_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -21,17 +21,18 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos os cabeçalhos
 )
 
+
 @app.get("/")
 def health_check():
     return "Ok, it's alive!"
 
 
-
 app.include_router(user_router)
 app.include_router(reset_router)
-app.include_router(admin_router)
+# app.include_router(admin_router)
 
 manager = ConnectionManager()
+
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
