@@ -3,7 +3,7 @@ import websockets
 from decouple import config, UndefinedValueError
 import requests
 
-url_email = "http://fastapi:8000/reset/add-request"
+url_email = "http://192.168.126.152:8000/reset/add-request"
 headers = {
     'Content-Type': 'application/json'
 }
@@ -25,7 +25,7 @@ async def connect_to_websocket():
         print(f"Error: {e}")
         return
 
-    uri = f"ws://fastapi:8000/reset/ws/resetkey?token={secret_code}"
+    uri = f"ws://192.168.126.152:8000/reset/ws/resetkey?token={secret_code}"
 
     while True:
         try:
