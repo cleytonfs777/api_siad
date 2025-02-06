@@ -1,5 +1,5 @@
 
-# Automação de Restauração de Senhas no Sistema SIAD
+# Automação de Restauração de Senhas no Sistema SIAD RMBH
 
 Esta aplicação automatiza a restauração de senhas no sistema interno do Corpo de Bombeiros chamado SIAD. A aplicação utiliza um cliente WebSocket para se comunicar com o servidor FastAPI e um banco de dados PostgreSQL para armazenar as solicitações de restauração de senha.
 
