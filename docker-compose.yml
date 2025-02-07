@@ -13,20 +13,32 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - /var/cache/postgres_data_2:/var/lib/postgresql/data
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      retries: 5
   fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: api_siad_fastapi
     restart: always
     container_name: api_siad_fastapi
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
     env_file:
       - .env
     expose:
       - "8000"
     environment:
-      - DB_URL=postgresql+psycopg2://admin:adminpass@api_siad_postgresql:5432/railway
-
+      - DB_URL=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@api_siad_postgresql:5432/${POSTGRES_DB}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - SECRETCODE=${SECRETCODE}
+      - EMAILAPP=${EMAILAPP}
+      - SENHAAPP=${SENHAAPP}
+    
   bot:
     build:
       context: .
@@ -34,7 +46,14 @@ services:
     depends_on:
       - fastapi
     environment:
-      SECRETCODE: ${SECRETCODE}
+      - SECRETCODE=${SECRETCODE}
+      - MYNUMBER=${MYNUMBER}
+      - MYPASS=${MYPASS}
+      - SYSTEM=${SYSTEM}
+      - EMAIL_USER_ADMIN=${EMAIL_USER_ADMIN}
+      - URL_EMAIL=${URL_EMAIL}
+      - CAMINHO_ARQ=${CAMINHO_ARQ}
+      - ITV_TECLAS=${ITV_TECLAS}
     volumes:
       - .:/app
 
